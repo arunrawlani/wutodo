@@ -6,9 +6,10 @@ import cgitb
 #cgitb.enable()
 
 class City :
-    def __init__(self,Name,Tags,Points) :
+    def __init__(self,Name,Tags,Weather,Points) :
         self.Points = Points
         self.Name = Name
+        self.Weater = Weather
         self.Tags = Tags
 
 
@@ -44,6 +45,7 @@ def rankCities(listOfCities, listofactivities, startdate, enddate):
 Results = []
 Cities = []
 Destination = ["Berlin","London","Montreal","Dubai","Phuket","Paris","Bali"]
+Weather = ["warm","rainy","snowy","warm","tropical","warm","tropical"]
 BerTags =["City","Big","Historical", "Sausage", "CurryWurst","NightLife","German","Brandenburg","Reichstag","Germany"]
 LonTags =["City","Big","Historical","Rain", "Fish'nChips","Nightlife","English","Pubs","Big Ben","England"]
 MonTags =["City","Big","Historical","Poutine","Frostbite","Nightlife","Ski","McGill","Quebec"]
@@ -52,33 +54,42 @@ PhuTags =["City","Sun","Beach","Nightlife","Thailand"]
 ParTags =["City","Big","Historical","Eiffel Tower","Baguette","French","White flags"]
 BalTags =["Island","Culture","Beach","Summer","Sun","City"]
 TagList =[BerTags,LonTags,MonTags,DubTags,PhuTags,ParTags,BalTags]
-
-
+Tags =["Historical","NightLife","CurryWurst", "Modern","Culture","Island","Beach","Ski","Poutine","Pubs"]
+Activities = ["Adventures","Attractions","Them Park","Water Activities", "Cruises & Water Tours", "Show & Sport Tickets", "Walking & Bike Tours", "Day Trips & Excursions", "Hop-on Hop-off", "Multi-Day & Extended Tours","Tourists & Sight-Seeing","Food & Drink","Nightlife"]
 
 form = cgi.FieldStorage()
 BegDate = "2015-06-10"
 EndDate = "2015-06-12"
 CatChoice = ""
-RequestTags = ["Quebec"]
-RequestActivities = ["Adventures","Food & Drink"]
+RequestTags = []
+RequestWeather = "warm"
+RequestActivities = []
 Departure = "Montreal"
-if "startDate" in form:
-    Begdate=form["startDate"].value
-    if(form["EndDate"].value) :   
-        EndDate=form["EndDate"].value
-if "Type of Trip" in form :
-    CatChoice = form["Type of trip"].value
-if "Tags" in form : 
-    RequestTags = form["Tags"].value
-if "Activities" in form :
-    RequestActivities = form["Activities"].value
+if "departure" in form:
+    Begdate=form["departure"].value
+    if(form["return"].value) :   
+        EndDate=form["return"].value
+
+for i in range(len(Tags)):
+    if Tags[i] in form:
+        RequestTags.append(Tags[i])
+if not RequestTags :
+    RequestTags = ["Poutine"]
+if not RequestActivities :
+    RequestActivities = ["Adventures"]
+for i in range(len(Activities)):
+    if Activities[i] in form:
+        RequestTags.append(Activities[i])
+
+if "user_weather" in form :
+    RequestWeather = form["user_weather"].value
 if "Departure" in form:
     Departure = form["Departure"].value
 
 for i in range(len(Destination)) :
     if (Destination[i]==Departure) :
         continue
-    city = City(Destination[i], TagList[i],0)
+    city = City(Destination[i], TagList[i],Weather[i],0)
     Cities.append(city)
 
 
@@ -99,21 +110,3 @@ for city in NarrowDest:
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate)
-
-
-print ''' Content type: Text\n\n
-
-<html>
-<header>
-<title>Your Travel</title>
-<body>'''
-for city in RankedList :
-    print city.Name + "<br>"
-print '''</body>
-</html>'''
-
-
-
-
-
-    
