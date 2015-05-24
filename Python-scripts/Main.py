@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import urllib2
 import json
 import cgi
@@ -129,18 +131,19 @@ for i in range(len(RequestTags)):
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
-print '''Content-Type: text/html \r\n\r\n
+for city in RankedList :
+	city.Picture = imgdict.get(city.Name)
+
+print '''Content-Type:text/html\n\n
 <html>
 <head>
 <title>Hey</title>
 </head>
 <body>'''
 for city in RankedList :
-    city.Picture = imgdict.get(city.Name)
-    print city.Picture
     print city.Name
-'''</body>
-<html>
-
+print '''</body>
+</html>
+'''
 
 
