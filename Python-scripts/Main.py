@@ -87,8 +87,14 @@ RequestActivities = []
 Departure = "Montreal"
 if "departure" in form:
     Begdate=form["departure"].value
+    BegDate = Begdate.split("/")
+    BegDate = BegDate[::-1]
+    BegDate = "-".join(BegDate)
     if(form["return"].value) :   
         EndDate=form["return"].value
+		EndDate = EndDate.split("/")
+		EndDate = EndDate[::-1]
+		EndDate = "-".join(EndDate)
 
 for i in range(len(Tags)):
     if Tags[i] in form:
@@ -129,7 +135,12 @@ for i in range(len(RequestTags)):
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
-
+print "Content-Type: text/html"
 for city in RankedList :
     city.Picture = imgdict.get(city.Name)
+    print city.Picture
     print city.Name
+
+
+
+
