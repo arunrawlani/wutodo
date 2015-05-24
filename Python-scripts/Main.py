@@ -153,15 +153,19 @@ for city in RankedList :
     ResultUrl = data["PackageSearchResultList"]["PackageSearchResult"]["DetailsUrl"]
 
     result = Result(ArrCity,Price,BegDate,EndDate,ResultUrl,city.Picture)
-
+    Results.append(result)
 print '''Content-Type:text/html\n\n
 <html>
 <head>
 <title>Hey</title>
 </head>
 <body>'''
-for city in RankedList :
-    print city.Name
+for results in Results :
+    print results.Name
+    print results.url
+    print results.img
+    print results.Price
+    print "\n"
 print '''</body>
 </html>
 '''
