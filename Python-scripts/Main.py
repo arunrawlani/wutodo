@@ -3,7 +3,7 @@ import json
 import cgi
 import cgitb
 
-cgitb.enable()
+#cgitb.enable()
 
 class City :
     def __init__(self,Name,Tags,Points) :
@@ -11,16 +11,8 @@ class City :
         self.Name = Name
         self.Tags = Tags
 
-class Result :
-    def __init__(self,Name,Points,Price,Outgoing,Returning,url):
-        self.Name = Name
-        self.Points = Points
-        self.Price = Price
-        self.Outgoing = Outgoing
-        self.Returning = Returning
-        self.url = url
 
-Ranked = ["","",""]
+Ranked = []
 def rankCities(listOfCities, listofactivities, startdate, enddate):
     for city in listOfCities :
         apikey = '&apikey=j3HAAFcwQG6n3X1Q0Ec84wgwZuDmwiFY'
@@ -38,15 +30,19 @@ def rankCities(listOfCities, listofactivities, startdate, enddate):
                 city.Points = city.Points + data['filterCategories'][activity]['count']
 	    except:
 	       continue
-    sorted(listOfCities, key=lambda city: city.Points, reverse=True)
-    for i in range(3):
-        Ranked[i] = listOfCities[i]
-        print Ranked[i]
+    listOfCities = sorted(listOfCities, key=lambda city: city.Points, reverse=True)
+
+
+		
+    for i in range(min(3,len(listOfCities))):
+		Ranked.append(listOfCities[i])
+
+
     return Ranked
 
-Cities = []
-Results = []
 
+Results = []
+Cities = []
 Destination = ["Berlin","London","Montreal","Dubai","Phuket","Paris","Bali"]
 BerTags =["City","Big","Historical", "Sausage", "CurryWurst","NightLife","German","Brandenburg","Reichstag","Germany"]
 LonTags =["City","Big","Historical","Rain", "Fish'nChips","Nightlife","English","Pubs","Big Ben","England"]
@@ -57,12 +53,14 @@ ParTags =["City","Big","Historical","Eiffel Tower","Baguette","French","White fl
 BalTags =["Island","Culture","Beach","Summer","Sun","City"]
 TagList =[BerTags,LonTags,MonTags,DubTags,PhuTags,ParTags,BalTags]
 
+
+
 form = cgi.FieldStorage()
 BegDate = "2015-06-10"
 EndDate = "2015-06-12"
 CatChoice = ""
-RequestTags = ["City"]
-RequestActivities = ["Nightlife"]
+RequestTags = ["Quebec"]
+RequestActivities = ["Adventures","Food & Drink"]
 Departure = "Montreal"
 if "startDate" in form:
     Begdate=form["startDate"].value
@@ -77,33 +75,13 @@ if "Activities" in form :
 if "Departure" in form:
     Departure = form["Departure"].value
 
-    
 for i in range(len(Destination)) :
-    if Destination[i] == Departure :
+    if (Destination[i]==Departure) :
         continue
-    city = City(Destination[i],TagList[i], 0)
+    city = City(Destination[i], TagList[i],0)
     Cities.append(city)
 
 
-form = cgi.FieldStorage()
-BegDate = "2015-06-10"
-EndDate = "2015-06-12"
-CatChoice = ""
-RequestTags = ["City"]
-RequestActivities = ["Nightlife"]
-Departure = "Montreal"
-if "startDate" in form:
-    Begdate=form["startDate"].value
-    if(form["EndDate"].value) :   
-        EndDate=form["EndDate"].value
-if "Type of Trip" in form :
-    CatChoice = form["Type of trip"].value
-if "Tags" in form : 
-    RequestTags = form["Tags"].value
-if "Activities" in form :
-    RequestActivities = form["Activities"].value
-if "Departure" in form:
-    Departure = form["Departure"].value
 
 
 NarrowDest =[]
@@ -111,49 +89,25 @@ for i in range(len(RequestTags)):
     for j in range(len(Cities)):
         for k in range(len(Cities[j].Tags)):
             if RequestTags[i] == Cities[j].Tags[k]:
-                NarrowDest.append(Cities[j])
+				NarrowDest.append(Cities[j])
+				#print Cities[j].Name
+				#print Cities[j].Tags[k]
+				
+	
+for city in NarrowDest:
+    print city.Name
+
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate)
 
-for city in RankedList :
-    DepCity = Departure.lower()
-    ArrCity = city.Name.lower()
-    DepCity.replace(" ", "%20")
-    ArrCity.replace(" ", "%20")
-
-    DepUrl = "http://terminal2.expedia.com/x/suggestions/regions?query="+DepCity+"&apikey=bWi3OmhFA3L34BLYkjYsucA6SVmMU8lr"
-    response = urllib2.urlopen(DepUrl).read()
-    data = json.loads(response)
-    DepAir = data["sr"][0]["a"]
-    
-    ArrUrl = "http://terminal2.expedia.com/x/suggestions/regions?query="+ArrCity+"&apikey=bWi3OmhFA3L34BLYkjYsucA6SVmMU8lr"
-    response = urllib2.urlopen(ArrUrl).read()
-    data = json.loads(response)
-    ArrID = data['sr'][0]['id']
-    ArrAir = data['sr'][0]['a']
-
-    PackageUrl = "http://terminal2.expedia.com:80/x/packages?originAirport="+DepAir+"&destinationAirport="+ArrAir+"&departureDate="+BegDate+"&returnDate="+EndDate+"&regionid="+ArrID+"&limit=1&apikey=bWi3OmhFA3L34BLYkjYsucA6SVmMU8lr"
-    response = urllib2.urlopen(PackageUrl).read()
-    data = json.loads(response)
-    DepTravelTime =data["FlightList"]["Flight"]["FlightItinerary"]["FlightLeg"][0]["FlightDuration"]
-    RetTravelTime =data["FlightList"]["Flight"]["FlightItinerary"]["FlightLeg"][1]["FlightDuration"]
-    Price = str(data["PackageSearchResultList"]["PackageSearchResult"]["PackagePrice"]["TotalPrice"]["Value"])+" "+data["PackageSearchResultList"]["PackageSearchResult"]["PackagePrice"]["TotalPrice"]["Currency"]
-    ResultUrl = data["PackageSearchResultList"]["PackageSearchResult"]["DetailsUrl"]
-
-    
-    DepTravelTime = DepTravelTime.replace("PT","").replace("H"," hours and ").replace("M"," minutes") 
-    RetTravelTime = RetTravelTime.replace("PT","").replace("H"," hours and ").replace("M"," minutes") 
-    result = Result(city.Name,city.Points,Price,DepTravelTime,RetTravelTime,ResultUrl)
-    Results.append(result)
-    length = len(Results)
 
 print ''' Content type: Text\n\n
 
 <html>
 <header>
-<title>Your %d Travel</title>
-<body>'''% length
-for city in Results :
+<title>Your Travel</title>
+<body>'''
+for city in RankedList :
     print city.Name + "<br>"
 print '''</body>
 </html>'''

@@ -5,10 +5,20 @@ import cgitb
 
 cgitb.enable()
 
+
+class Result :
+    def __init__(self,Name,Price,Outgoing,Returning,url):
+        self.Name = Name
+        #self.Points = Points
+        self.Price = Price
+        self.Outgoing = Outgoing
+        self.Returning = Returning
+        self.url = url
+
 BegDate ="2015-06-15"
 EndDate ="2015-06-20"
 DepCity = "Montreal"
-ArrCity = "Berlin"
+ArrCity = "Jakarta"
 DepCity = DepCity.lower()
 ArrCity = ArrCity.lower()
 DepCity.replace(" ", "%20")
@@ -36,6 +46,7 @@ ResultUrl = data["PackageSearchResultList"]["PackageSearchResult"]["DetailsUrl"]
 
 DepTravelTime = DepTravelTime.replace("PT","").replace("H"," hours and ").replace("M"," minutes") 
 RetTravelTime = RetTravelTime.replace("PT","").replace("H"," hours and ").replace("M"," minutes") 
+result = Result(ArrCity.replace("%20"," "),LowestPrice,DepTravelTime,RetTravelTime,ResultUrl)
 
 print LowestPrice
 print DepTravelTime
