@@ -129,12 +129,18 @@ for i in range(len(RequestTags)):
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
-print "Content-Type: text/html \r\n\r\n"
+print '''Content-Type: text/html \r\n\r\n
+<html>
+<head>
+<title>Hey</title>
+</head>
+<body>'''
 for city in RankedList :
     city.Picture = imgdict.get(city.Name)
     print city.Picture
     print city.Name
-
+'''</body>
+<html>
 
 
 
