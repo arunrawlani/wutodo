@@ -9,7 +9,7 @@ class City :
     def __init__(self,Name,Tags,Weather,Points) :
         self.Points = Points
         self.Name = Name
-        self.Weater = Weather
+        self.Weather = Weather
         self.Tags = Tags
 
 
@@ -31,7 +31,7 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
                 city.Points = city.Points + data['filterCategories'][activity]['count']
 	    except:
 	       continue
-	 if RequestWeather == city.Weather :
+        if (RequestWeather == city.Weather) :
              city.Points = city.Points + 50
     listOfCities = sorted(listOfCities, key=lambda city: city.Points, reverse=True)
 
@@ -76,13 +76,13 @@ for i in range(len(Tags)):
     if Tags[i] in form:
         RequestTags.append(Tags[i])
 if not RequestTags :
-    RequestTags = ["Poutine"]
+    RequestTags = ["Beach"]
 if not RequestActivities :
     RequestActivities = ["Adventures"]
 for i in range(len(Activities)):
-    if Activities[i] in form:
+    if Activities[i] in form :
         RequestTags.append(Activities[i])
-
+                           
 if "user_weather" in form :
     RequestWeather = form["user_weather"].value
 if "Departure" in form:
@@ -97,6 +97,7 @@ for i in range(len(Destination)) :
 
 
 
+
 NarrowDest =[]
 for i in range(len(RequestTags)):
     for j in range(len(Cities)):
@@ -107,8 +108,9 @@ for i in range(len(RequestTags)):
 				#print Cities[j].Tags[k]
 				
 	
-for city in NarrowDest:
-    print city.Name
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
+
+for city in RankedList :
+    print city.Name
