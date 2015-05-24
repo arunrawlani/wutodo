@@ -27,7 +27,6 @@ class Result :
 Ranked = []
 def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeather):
     for city in listOfCities :
-        print city.Name
         apikey = '&apikey=j3HAAFcwQG6n3X1Q0Ec84wgwZuDmwiFY'
         url = 'http://terminal2.expedia.com:80/x/activities/search?'
         url = url+'&location=' + str(city.Name)
@@ -154,21 +153,22 @@ for city in RankedList :
 
     result = Result(ArrCity,Price,BegDate,EndDate,ResultUrl,city.Picture)
     Results.append(result)
-print "\n"
-print '''Content-Type:text/html\n\n
+
+print '''Content-type: text/html \n\n
 <html>
-<head>
-<title>Hey</title>
-</head>
-<body>'''
-for results in Results :
-    print results.Name
-    print results.url
-    print results.img
-    print results.Price
-    print "\n"
-print '''</body>
-</html>
-'''
+	<head><title>This is me</title></head>
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+	<body style="font-family:'Nunito',sans-serif;background-color:white;color:black;">
+		
+                <div style="width:600px;background-color:#F2F2F2;margin-left:auto;margin-right:auto;min-height:650px;border-radius:15px">
+			<div style="text-align:center;"><h1>Where will you go?</h1></div>'''
+for city in Results :
+    print '''<div style="background-image:url(%s);width:600px;min-height:200px;background-size:contain;
+    background-repeat:no-repeat;vertical-align:middle;text-align:center">
+    </div><br>
+    <div style:"text-align:center;margin-top:15px;margin-bottom:15px"><a href=%s>%s</a><div><br>
+    ''' %(city.img,city.url,city.Name)
 
-
+print'''</div>
+	</body>
+</html>''' 
