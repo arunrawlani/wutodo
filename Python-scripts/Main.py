@@ -156,19 +156,18 @@ for city in RankedList :
 
 print '''Content-type: text/html \n\n
 <html>
-	<head><title>Your Trips</title></head>
+<head><title>Your trips</title></head>
 	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 	<body style="font-family:'Nunito',sans-serif;background-color:white;color:black;">
 		
-                <div style="width:600px;background-color:#F2F2F2;margin-left:auto;margin-right:auto;min-height:650px;border-radius:15px">
+		<div style="width:600px;background-color:#F2F2F2;margin-left:auto;margin-right:auto;min-height:650px;border-radius:15px">
 			<div style="text-align:center;"><h1>Where will you go?</h1></div>'''
-#for city in Results :
-#    print '''<div style="background-image:url(%s);width:600px;min-height:200px;background-size:contain;
-#    background-repeat:no-repeat;vertical-align:middle;text-align:center">
-#    </div><br>
-#    <div style:"text-align:center;margin-top:15px;margin-bottom:15px"><a href=%s>%s</a><div><br>
-#    ''' %(city.img,city.url,city.Name)
-
-print'''</div>
+for city in Results :
+    print '''<div style="background-image:url(%s);width:600px;min-height:200px;background-size:contain;
+					background-repeat:no-repeat;vertical-align:middle;text-align:center">
+			</div><br>
+			<div style:"text-align:center;margin-top:15px;margin-bottom:15px"><a href=%s>%s</a>  %s<div><br>
+			'''%(city.img,city.url,city.Name,city.Price)
+print   '''</div>
 	</body>
 </html>''' 
