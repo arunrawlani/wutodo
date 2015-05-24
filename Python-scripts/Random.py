@@ -18,14 +18,9 @@ while DepIndex == ArrIndex :
 Arrival = Destination[Arrindex]
 
 
-if "startDate" in form:
-    Begdate=form["startDate"].value
-    if(form["EndDate"].value) :   
-        EndDate=form["EndDate"].value
-if "Type of Trip" in form :
-    CatChoice = form["Type of trip"].value
-if "Tags" in form : 
-    RequestTags = form["Tags"].value
-if "Activities" in form :
-    RequestActivities = form["Activities"].value
+if "departure" in form:
+    BegDate = form["departure"].value
+    if "return" in form:
+        EndDate = form["return"].value
+
 
