@@ -7,13 +7,13 @@ cgitb.enable()
 
 
 class Result :
-    def __init__(self,Name,Price,Outgoing,Returning,url):
+    def __init__(self,Name,Price,OutgoingDate,ReturningDate,url,img):
         self.Name = Name
-        #self.Points = Points
         self.Price = Price
-        self.Outgoing = Outgoing
-        self.Returning = Returning
+        self.OutgoingDate = OutgoingDate
+        self.ReturningDate = ReturningDate
         self.url = url
+        self.img = img
 
 BegDate ="2015-06-15"
 EndDate ="2015-06-20"
