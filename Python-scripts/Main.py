@@ -47,13 +47,15 @@ def rankCities(listOfCities, listofactivities, startdate, enddate):
 Cities = []
 Results = []
 
-Destination = ["Berlin","London","Montreal","Dubai","Phuket"]
+Destination = ["Berlin","London","Montreal","Dubai","Phuket","Paris","Bali"]
 BerTags =["City","Big","Historical", "Sausage", "CurryWurst","NightLife","German","Brandenburg","Reichstag","Germany"]
 LonTags =["City","Big","Historical","Rain", "Fish'nChips","Nightlife","English","Pubs","Big Ben","England"]
 MonTags =["City","Big","Historical","Poutine","Frostbite","Nightlife","Ski","McGill","Quebec"]
 DubTags =["City","Big","Modern","Beach","Sun","Hot","Burj Khalifa"]
 PhuTags =["City","Sun","Beach","Nightlife","Thailand"]
-TagList =[BerTags,LonTags,MonTags,DubTags,PhuTags]
+ParTags =["City","Big","Historical","Eiffel Tower","Baguette","French","White flags"]
+BalTags =["Island","Culture","Beach","Summer","Sun","City"]
+TagList =[BerTags,LonTags,MonTags,DubTags,PhuTags,ParTags,BalTags]
 
 form = cgi.FieldStorage()
 BegDate = "2015-06-10"
