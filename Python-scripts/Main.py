@@ -94,8 +94,8 @@ for i in range(len(Activities)):
                            
 if "user_weather" in form :
     RequestWeather = form["user_weather"].value
-if "Departure" in form:
-    Departure = form["Departure"].value
+if "firstname" in form:
+    Departure = form["firstname"].value
 
 for i in range(len(Destination)) :
     if (Destination[i]==Departure) :
