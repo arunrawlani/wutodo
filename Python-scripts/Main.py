@@ -6,10 +6,10 @@ import cgitb
 #cgitb.enable()
 
 class City :
-    def __init__(self,Name,Tags,Weather,Points) :
+    def __init__(self,Name,Tags,Weather,Picture,Points) :
         self.Points = Points
         self.Name = Name
-        self.Weater = Weather
+        self.Weather = Weather
         self.Tags = Tags
 
 
@@ -31,7 +31,7 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
                 city.Points = city.Points + data['filterCategories'][activity]['count']
 	    except:
 	       continue
-	 if RequestWeather == city.Weather :
+        if (RequestWeather == city.Weather) :
              city.Points = city.Points + 50
     listOfCities = sorted(listOfCities, key=lambda city: city.Points, reverse=True)
 
@@ -43,6 +43,15 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
 
     return Ranked
 
+imgdict={
+            "Berlin":"./expimg/Berlin_3.jpeg",
+            "London":"./expimg/portfolio-3.jpg",
+            "Montreal":"./expimg/Montreal_1.jpg",
+            "Dubai":"./expimg/Dubai_1.jpg",
+            "Phuket":"./expimg/Phuket_2.jpg",
+            "Bali":"./expimg/Bali_1.jpg",
+            "Paris":"http://upload.wikimedia.org/wikipedia/commons/e/e6/Paris_Night.jpg"
+        }
 
 Results = []
 Cities = []
@@ -85,23 +94,24 @@ for i in range(len(Tags)):
     if Tags[i] in form:
         RequestTags.append(Tags[i])
 if not RequestTags :
-    RequestTags = ["Poutine"]
+    RequestTags = ["Beach"]
 if not RequestActivities :
     RequestActivities = ["Adventures"]
 for i in range(len(Activities)):
-    if Activities[i] in form:
+    if Activities[i] in form :
         RequestTags.append(Activities[i])
-
+                           
 if "user_weather" in form :
     RequestWeather = form["user_weather"].value
-if "Departure" in form:
-    Departure = form["Departure"].value
+if "firstname" in form:
+    Departure = form["firstname"].value
 
 for i in range(len(Destination)) :
     if (Destination[i]==Departure) :
         continue
-    city = City(Destination[i], TagList[i],Weather[i],0)
+    city = City(Destination[i], TagList[i],Weather[i],"",0)
     Cities.append(city)
+
 
 
 
@@ -116,8 +126,10 @@ for i in range(len(RequestTags)):
 				#print Cities[j].Tags[k]
 				
 	
-for city in NarrowDest:
-    print city.Name
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
+
+for city in RankedList :
+    city.Picture = imgdict.get(city.Name)
+    print city.Name
