@@ -27,6 +27,7 @@ class Result :
 Ranked = []
 def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeather):
     for city in listOfCities :
+        print city.Name
         apikey = '&apikey=j3HAAFcwQG6n3X1Q0Ec84wgwZuDmwiFY'
         url = 'http://terminal2.expedia.com:80/x/activities/search?'
         url = url+'&location=' + str(city.Name)
@@ -46,7 +47,7 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
              city.Points = city.Points + 50
     listOfCities = sorted(listOfCities, key=lambda city: city.Points, reverse=True)
     for i in range(min(3,len(listOfCities))):
-		Ranked.append(listOfCities[i])
+	Ranked.append(listOfCities[i])
     return Ranked
 
 
@@ -77,13 +78,13 @@ Activities = ["Adventures","Attractions","Them Park","Water Activities", "Cruise
 
 
 form = cgi.FieldStorage()
-BegDate = "2015-06-10"
-EndDate = "2015-06-12"
+BegDate = "2015-05-29"
+EndDate = "2015-05-31"
 CatChoice = ""
 RequestTags = []
 RequestWeather = "warm"
 RequestActivities = []
-DepCity = "Montreal"
+DepCity = "Jakarta"
 if "departure" in form:
     Begdate=form["departure"].value
     if(form["return"].value) :   
@@ -94,24 +95,24 @@ for i in range(len(Tags)):
         RequestTags.append(Tags[i])
         
 if not RequestTags :
-    RequestTags = ["Beach"]
+    RequestTags = ["Historical"]
 
-for i in range(len(Activities)):
-    if Activities[i] in form :
-        RequestTags.append(Activities[i])    
+for j in range(len(Activities)):
+    if Activities[j] in form :
+        RequestTags.append(Activities[j])    
 
 if not RequestActivities :
-    RequestActivities = ["Adventures"]
+    RequestActivities = ["Attractions","Water Activities","Tourists & Sight-Seeing"]
                                
 if "user_weather" in form :
     RequestWeather = form["user_weather"].value
 if "firstname" in form:
     DepCity= form["firstname"].value
 
-for i in range(len(Destination)) :
-    if (Destination[i]==DepCity) :
+for k in range(len(Destination)) :
+    if (Destination[k]==DepCity) :
         continue
-    city = City(Destination[i], TagList[i],Weather[i],"",0)
+    city = City(Destination[k], TagList[k],Weather[k],"",0)
     Cities.append(city)
 
 
@@ -119,19 +120,18 @@ for i in range(len(Destination)) :
 
 
 NarrowDest =[]
-for i in range(len(RequestTags)):
-    for j in range(len(Cities)):
+for j in range(len(Cities)):
+    for i in range(len(RequestTags)):
         for k in range(len(Cities[j].Tags)):
             if RequestTags[i] == Cities[j].Tags[k]:
-		NarrowDest.append(Cities[j])
-				
-				
-	
+                NarrowDest.append(Cities[j])
+		break			
+        break
+    continue
 
 
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
 for city in RankedList :
-    
     city.Picture = imgdict.get(city.Name)
     DepCity.replace(" ", "%20")
     ArrCity =city.Name.replace(" ", "%20")
@@ -154,6 +154,7 @@ for city in RankedList :
 
     result = Result(ArrCity,Price,BegDate,EndDate,ResultUrl,city.Picture)
     Results.append(result)
+print "\n"
 print '''Content-Type:text/html\n\n
 <html>
 <head>
