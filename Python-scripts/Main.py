@@ -14,7 +14,7 @@ class City :
 
 
 Ranked = []
-def rankCities(listOfCities, listofactivities, startdate, enddate):
+def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeather):
     for city in listOfCities :
         apikey = '&apikey=j3HAAFcwQG6n3X1Q0Ec84wgwZuDmwiFY'
         url = 'http://terminal2.expedia.com:80/x/activities/search?'
@@ -31,6 +31,8 @@ def rankCities(listOfCities, listofactivities, startdate, enddate):
                 city.Points = city.Points + data['filterCategories'][activity]['count']
 	    except:
 	       continue
+	 if RequestWeather == city.Weather :
+             city.Points = city.Points + 50
     listOfCities = sorted(listOfCities, key=lambda city: city.Points, reverse=True)
 
 
@@ -109,4 +111,4 @@ for city in NarrowDest:
     print city.Name
 
 
-RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate)
+RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
