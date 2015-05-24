@@ -59,6 +59,15 @@ TagList =[BerTags,LonTags,MonTags,DubTags,PhuTags,ParTags,BalTags]
 Tags =["Historical","NightLife","CurryWurst", "Modern","Culture","Island","Beach","Ski","Poutine","Pubs"]
 Activities = ["Adventures","Attractions","Them Park","Water Activities", "Cruises & Water Tours", "Show & Sport Tickets", "Walking & Bike Tours", "Day Trips & Excursions", "Hop-on Hop-off", "Multi-Day & Extended Tours","Tourists & Sight-Seeing","Food & Drink","Nightlife"]
 
+imgdict={
+            "Berlin":"./expimg/Berlin_3.jpeg",
+            "London":"./expimg/portfolio-3.jpg",
+            "Montreal":"./expimg/Montreal_1.jpg",
+            "Dubai":"./expimg/Dubai_1.jpg",
+            "Phuket":"./expimg/Phuket_2.jpg",
+            "Bali":"./expimg/Bali_1.jpg",
+            "Paris":"http://upload.wikimedia.org/wikipedia/commons/e/e6/Paris_Night.jpg"
+        }
 form = cgi.FieldStorage()
 BegDate = "2015-06-10"
 EndDate = "2015-06-12"
