@@ -6,7 +6,7 @@ import cgitb
 #cgitb.enable()
 
 class City :
-    def __init__(self,Name,Tags,Weather,Points) :
+    def __init__(self,Name,Tags,Weather,Picture,Points) :
         self.Points = Points
         self.Name = Name
         self.Weather = Weather
@@ -43,6 +43,15 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
 
     return Ranked
 
+imgdict={
+            "Berlin":"./expimg/Berlin_3.jpeg",
+            "London":"./expimg/portfolio-3.jpg",
+            "Montreal":"./expimg/Montreal_1.jpg",
+            "Dubai":"./expimg/Dubai_1.jpg",
+            "Phuket":"./expimg/Phuket_2.jpg",
+            "Bali":"./expimg/Bali_1.jpg",
+            "Paris":"http://upload.wikimedia.org/wikipedia/commons/e/e6/Paris_Night.jpg"
+        }
 
 Results = []
 Cities = []
@@ -91,7 +100,7 @@ if "Departure" in form:
 for i in range(len(Destination)) :
     if (Destination[i]==Departure) :
         continue
-    city = City(Destination[i], TagList[i],Weather[i],0)
+    city = City(Destination[i], TagList[i],Weather[i],"",0)
     Cities.append(city)
 
 
@@ -113,4 +122,5 @@ for i in range(len(RequestTags)):
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
 
 for city in RankedList :
+    city.Picture = imgdict{city.Name}
     print city.Name
