@@ -122,5 +122,5 @@ for i in range(len(RequestTags)):
 RankedList = rankCities(NarrowDest, RequestActivities, BegDate, EndDate,RequestWeather)
 
 for city in RankedList :
-    city.Picture = imgdict{city.Name}
+    city.Picture = imgdict.get(city.Name)
     print city.Name
