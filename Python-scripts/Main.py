@@ -51,12 +51,12 @@ def rankCities(listOfCities, listofactivities, startdate, enddate, RequestWeathe
 
 
 imgdict={
-            "Berlin":"./expimg/Berlin_3.jpeg",
-            "London":"./expimg/portfolio-3.jpg",
-            "Montreal":"./expimg/Montreal_1.jpg",
-            "Dubai":"./expimg/Dubai_1.jpg",
-            "Phuket":"./expimg/Phuket_2.jpg",
-            "Bali":"./expimg/Bali_1.jpg",
+            "Berlin":"http://s14.postimg.org/sq8icx7pd/Berlin_3.jpg",
+            "London":"http://cdn.londonandpartners.com/visit/london-organisations/houses-of-parliament/63950-640x360-london-icons2-640.jpg",
+            "Montreal":"http://s3.postimg.org/kaepl85wz/Montreal_1.jpg",
+            "Dubai":"http://www.netflights.com/media/189043/dubai_02_681x298.jpg",
+            "Phuket":"http://s1.postimg.org/ydfi05q27/Phuket_2.jpg",
+            "Bali":"http://s14.postimg.org/3mmuf6kox/Bali_1.jpg",
             "Paris":"http://upload.wikimedia.org/wikipedia/commons/e/e6/Paris_Night.jpg"
         }
 
