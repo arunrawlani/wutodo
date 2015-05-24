@@ -10,7 +10,6 @@
     <meta name="author" content="">
 
     <title>Wutodo- Welcome</title>
-    <link rel="shortcut icon" type="image/ico" href="https://github.com/arunrawlani/wutodo/blob/gh-pages/img/favicon.ico" />
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +62,7 @@
     <header id="top" class="header">
         <div class="text-vertical-center">
             <h1>Wutodo</h1>
-            <h3>FUCK YOU ALL</h3>
+            <h3>Let your passion choose your destination.</h3>
             <br>
             <a href="#about" class="btn btn-dark btn-lg">Curious?</a>
         </div>
